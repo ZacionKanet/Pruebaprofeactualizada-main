@@ -4,10 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-
-
-
-
 // Importamos  las librerías necesarias
 // creamos Constantes que utilizaremos en el envio
 const apiUrl = "http://localhost:3000/usuarios";
@@ -33,27 +29,27 @@ export class PerfilServiceService {
 
   // Método Agregar perfil, y devuelve un observable del tipo perfil
   // Debe ser un Observable si deses suscribir este método en otro lado
-  addPerfil(perfil: ClPerfil): Observable<ClPerfil> {
-    console.log("Res-api Enviando AddPerfil : ", perfil);
-    // Ojo No lo ejecuta lo declara
+  addPerfil(perfil: ClPerfil): Observable<ClPerfil> { //Esto es una declaración de un método llamado addPerfil. Toma un objeto "perfil" de tipo ClPerfil como argumento y devuelve un observable de tipo ClPerfil.
+    console.log("Res-api Enviando AddPerfil : ", perfil); // Función que imprime un mensaje en la consola indicando que se está enviando un perfil a la API. Muestra el perfil que se está enviando como parte del mensaje.
+
     // El Pipe lo intercepta
-    return this.http.post<ClPerfil>(apiUrl, perfil, httpOptions)
+    return this.http.post<ClPerfil>(apiUrl, perfil, httpOptions) //Utiliza el método post de HttpClient para realizar una solicitud HTTP POST a la URL almacenada en apiUrl. Se envía el objeto perfil como parte de la solicitud y se utilizan las opciones definidas en httpOptions.
       .pipe(  // Tubería
         // tap intersecta la respuesta si no hay error
         tap((perfil: ClPerfil) => console.log('added perfil w/:', perfil)),
         // En caso de que ocurra Error
-        catchError(this.handleError<ClPerfil>('addPerfil'))
+        catchError(this.handleError<ClPerfil>('addPerfil')) //  Esto es un operador de RxJS llamado catchError, también dentro del método pipe. Toma el resultado del método handleError como una función para manejar errores en la solicitud.
       );
   }
 
 
   // Obtenemos todos los Productos
-  getPerfils(): Observable<ClPerfil[]> {
+  getPerfils(): Observable<ClPerfil[]> { // Declaración de un método llamado getPerfils, que devuelve un observable de un arreglo de objetos ClPerfil.
     console.log("getPerfils ()");
-    return this.http.get<ClPerfil[]>(apiUrl)
+    return this.http.get<ClPerfil[]>(apiUrl)// Aquí se utiliza this.http.get para realizar una solicitud HTTP GET a la URL almacenada en apiUrl. Se espera que esta URL devuelva un arreglo de objetos ClPerfil.
       .pipe(
-        tap(heroes => console.log('fetched perfils')),
-        catchError(this.handleError('getPerfils', []))
+        tap(heroes => console.log('fetched perfils')), // Mensaje a la consola
+        catchError(this.handleError('getPerfils', [])) // Capturar el error
       );
   }
 
